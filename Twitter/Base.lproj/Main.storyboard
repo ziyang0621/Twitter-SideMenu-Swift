@@ -210,16 +210,61 @@
                                     <navigationItem title="Title" id="ANY-Ij-I6S"/>
                                 </items>
                             </navigationBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pgj-WY-9JY">
+                                <rect key="frame" x="9" y="81" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="AKO-R8-HOP"/>
+                                    <constraint firstAttribute="width" constant="80" id="fSJ-w1-R3X"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D96-Al-Bcl">
+                                <rect key="frame" x="103" y="87" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="vBu-d2-5MA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lvr-0m-6w9">
+                                <rect key="frame" x="103" y="121" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="q4e-d9-P6N"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eA1-0N-Sjp">
+                                <rect key="frame" x="9" y="200" width="303" height="353"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="eA1-0N-Sjp" secondAttribute="trailing" constant="-8" id="Agn-zN-uTB"/>
+                            <constraint firstItem="Lvr-0m-6w9" firstAttribute="leading" secondItem="Pgj-WY-9JY" secondAttribute="trailing" constant="14" id="JyQ-BH-ZMO"/>
                             <constraint firstItem="E2r-PA-by9" firstAttribute="leading" secondItem="jLd-1Z-4My" secondAttribute="leadingMargin" constant="-16" id="OZc-Kl-ueM"/>
+                            <constraint firstItem="eA1-0N-Sjp" firstAttribute="leading" secondItem="jLd-1Z-4My" secondAttribute="leadingMargin" constant="-7" id="TEI-ns-L8B"/>
+                            <constraint firstItem="eA1-0N-Sjp" firstAttribute="top" secondItem="Pgj-WY-9JY" secondAttribute="bottom" constant="39" id="TL4-wt-nPh"/>
+                            <constraint firstItem="pbS-u0-fux" firstAttribute="top" secondItem="eA1-0N-Sjp" secondAttribute="bottom" constant="15" id="V8J-4N-HVG"/>
+                            <constraint firstItem="Pgj-WY-9JY" firstAttribute="leading" secondItem="jLd-1Z-4My" secondAttribute="leadingMargin" constant="-7" id="a96-vb-Y79"/>
                             <constraint firstAttribute="trailingMargin" secondItem="E2r-PA-by9" secondAttribute="trailing" constant="-16" id="bPP-l1-ZtH"/>
+                            <constraint firstItem="Lvr-0m-6w9" firstAttribute="top" secondItem="D96-Al-Bcl" secondAttribute="bottom" constant="13" id="ecv-iO-9GN"/>
+                            <constraint firstItem="D96-Al-Bcl" firstAttribute="leading" secondItem="Pgj-WY-9JY" secondAttribute="trailing" constant="14" id="elV-Oc-cJu"/>
                             <constraint firstItem="E2r-PA-by9" firstAttribute="top" secondItem="jLd-1Z-4My" secondAttribute="topMargin" constant="20" id="fBy-vY-rGn"/>
+                            <constraint firstItem="Pgj-WY-9JY" firstAttribute="top" secondItem="E2r-PA-by9" secondAttribute="bottom" constant="17" id="v6h-Av-64n"/>
+                            <constraint firstItem="D96-Al-Bcl" firstAttribute="top" secondItem="Pgj-WY-9JY" secondAttribute="top" constant="6" id="w6I-wR-bRH"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="nameLabel" destination="D96-Al-Bcl" id="X1j-4G-h0w"/>
                         <outlet property="navBar" destination="E2r-PA-by9" id="ntH-WT-6RA"/>
+                        <outlet property="profileImageView" destination="Pgj-WY-9JY" id="KIW-qv-ge8"/>
+                        <outlet property="screennameLabel" destination="Lvr-0m-6w9" id="eGF-WS-lgr"/>
+                        <outlet property="statusTextView" destination="eA1-0N-Sjp" id="lBV-SS-PaP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vox-9t-sTJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

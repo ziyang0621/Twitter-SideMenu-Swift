@@ -8,7 +8,9 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource {
+let kNewTweetSegue = "newTweetSegue"
+
+class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate {
 
     var tweets: [Tweet]?
     
@@ -24,13 +26,13 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
         super.viewDidLoad()
         
         var cancelBtn = UIButton()
-        cancelBtn.bounds = CGRectMake(0, 0, 75, 20)
+        cancelBtn.frame = CGRectMake(0, 0, 75, 10)
         cancelBtn.setTitle("Sign Out", forState: UIControlState.Normal)
         cancelBtn.addTarget(self, action: "onLogout", forControlEvents: UIControlEvents.TouchUpInside)
         var leftBarItem = UIBarButtonItem(customView: cancelBtn)
         
         var sendBtn = UIButton()
-        sendBtn.bounds = CGRectMake(0, 0, 75, 20)
+        sendBtn.frame = CGRectMake(0, 0, 75, 10)
         sendBtn.setTitle("New", forState: UIControlState.Normal)
         sendBtn.addTarget(self, action: "newTweet", forControlEvents: UIControlEvents.TouchUpInside)
         var rightBarItem = UIBarButtonItem(customView: sendBtn)
@@ -74,23 +76,23 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
         return UIBarPosition.TopAttached
     }
     
+    func sentNewTweet(controller: NewTweetViewController) {
+        refreshTweets()
+    }
+    
     func newTweet() {
-//        var testText = "testtest"
-//        var escapedString = testText.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-//        var param = ["status" : escapedString!]
-//        TwitterClient.sharedInstance.composeCompletionWithParams(param, completion: { (tweets, error) -> () in
-//            if error != nil {
-//                println(error)
-//            }
-//            else {
-//                println("success")
-//            }
-//        })
-        performSegueWithIdentifier("newTweetSegue", sender: self)
+        performSegueWithIdentifier(kNewTweetSegue, sender: self)
     }
     
     func onLogout() {
         User.currentUser?.logout()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == kNewTweetSegue) {
+            let detailVC = segue.destinationViewController as NewTweetViewController
+            detailVC.delegate = self
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

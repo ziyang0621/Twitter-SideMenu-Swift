@@ -8,21 +8,35 @@
 
 import UIKit
 
+protocol NewTweetViewControllerDelegate {
+    func sentNewTweet(controller:NewTweetViewController)
+}
+
 class NewTweetViewController: UIViewController,UINavigationBarDelegate {
 
     @IBOutlet weak var navBar: UINavigationBar!
     
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var screennameLabel: UILabel!
+    
+    @IBOutlet weak var statusTextView: UITextView!
+    
+    var delegate :NewTweetViewControllerDelegate!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         var signOutBtn = UIButton()
-        signOutBtn.bounds = CGRectMake(0, 0, 75, 10)
+        signOutBtn.frame = CGRectMake(0, 0, 75, 10)
         signOutBtn.setTitle("Cancel", forState: UIControlState.Normal)
         signOutBtn.addTarget(self, action: "cancelTweet", forControlEvents: UIControlEvents.TouchUpInside)
         var leftBarItem = UIBarButtonItem(customView: signOutBtn)
         
         var newBtn = UIButton()
-        newBtn.bounds = CGRectMake(0, 0, 75, 10)
+        newBtn.frame = CGRectMake(0, 0, 75, 10)
         newBtn.setTitle("Tweet", forState: UIControlState.Normal)
         newBtn.addTarget(self, action: "sendTweet", forControlEvents: UIControlEvents.TouchUpInside)
         var rightBarItem = UIBarButtonItem(customView: newBtn)
@@ -34,6 +48,14 @@ class NewTweetViewController: UIViewController,UINavigationBarDelegate {
         navBar.items = [navItem]
         
         navBar.delegate = self
+        
+        nameLabel.text = User.currentUser?.name
+        screennameLabel.text = User.currentUser?.screenname
+        if let imageURL = User.currentUser?.profileImageUrl {
+            profileImageView.setImageWithURL(NSURL(string: imageURL))
+        }
+        
+        statusTextView.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,7 +72,17 @@ class NewTweetViewController: UIViewController,UINavigationBarDelegate {
     }
     
     func sendTweet() {
-        
+        var param = ["status" : statusTextView.text]
+        TwitterClient.sharedInstance.composeCompletionWithParams(param, completion: { (tweets, error) -> () in
+            if error != nil {
+                println(error)
+            }
+            else {
+                println("success")
+                self.delegate.sentNewTweet(self)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        })
     }
     
 
