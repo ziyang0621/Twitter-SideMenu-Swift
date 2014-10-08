@@ -23,17 +23,17 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var signOutBtn = UIButton()
-        signOutBtn.bounds = CGRectMake(0, 0, 75, 20)
-        signOutBtn.setTitle("Sign Out", forState: UIControlState.Normal)
-        signOutBtn.addTarget(self, action: "onLogout", forControlEvents: UIControlEvents.TouchUpInside)
-        var leftBarItem = UIBarButtonItem(customView: signOutBtn)
+        var cancelBtn = UIButton()
+        cancelBtn.bounds = CGRectMake(0, 0, 75, 20)
+        cancelBtn.setTitle("Sign Out", forState: UIControlState.Normal)
+        cancelBtn.addTarget(self, action: "onLogout", forControlEvents: UIControlEvents.TouchUpInside)
+        var leftBarItem = UIBarButtonItem(customView: cancelBtn)
         
-        var newBtn = UIButton()
-        newBtn.bounds = CGRectMake(0, 0, 75, 20)
-        newBtn.setTitle("New", forState: UIControlState.Normal)
-      //  newBtn.addTarget(self, action: "applyFilter", forControlEvents: UIControlEvents.TouchUpInside)
-        var rightBarItem = UIBarButtonItem(customView: newBtn)
+        var sendBtn = UIButton()
+        sendBtn.bounds = CGRectMake(0, 0, 75, 20)
+        sendBtn.setTitle("New", forState: UIControlState.Normal)
+        sendBtn.addTarget(self, action: "newTweet", forControlEvents: UIControlEvents.TouchUpInside)
+        var rightBarItem = UIBarButtonItem(customView: sendBtn)
         
         var navItem = UINavigationItem()
         navItem.leftBarButtonItem = leftBarItem
@@ -74,7 +74,21 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
         return UIBarPosition.TopAttached
     }
     
-
+    func newTweet() {
+//        var testText = "testtest"
+//        var escapedString = testText.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+//        var param = ["status" : escapedString!]
+//        TwitterClient.sharedInstance.composeCompletionWithParams(param, completion: { (tweets, error) -> () in
+//            if error != nil {
+//                println(error)
+//            }
+//            else {
+//                println("success")
+//            }
+//        })
+        performSegueWithIdentifier("newTweetSegue", sender: self)
+    }
+    
     func onLogout() {
         User.currentUser?.logout()
     }

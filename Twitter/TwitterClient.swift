@@ -26,17 +26,28 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     
     func homeTimeLineWithCompletionWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) ->()) {
         GET("1.1/statuses/home_timeline.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-             println("home timeline: \(response[0])")
+             println("home line: \(response[0])")
             
             var tweets = Tweet.tweetsWithArray(response as [NSDictionary])
             
-//            for tweet in tweets {
-//                println("text: \(tweet.text), created: \(tweet.createdAt)")
-//            }
+////            for tweet in tweets {
+////                println("text: \(tweet.text), created: \(tweet.createdAt)")
+////            }
             completion(tweets: tweets, error: nil)
         }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
             println("error getting home timeline")
             completion(tweets: nil, error: error)
+        })
+    }
+    
+    func composeCompletionWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) ->()) {
+        POST("1.1/statuses/update.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+                println("new tweet: \(response)")
+        
+                completion(tweets: nil, error: nil)
+            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("error composing new tweet")
+                completion(tweets: nil, error: error)
         })
     }
 

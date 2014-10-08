@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().shadowImage = UIColor.imageWithColor(kThemeColor)
         UINavigationBar.appearance().translucent = true
 
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "userDidLogout", name: userDidLogoutNotificaiton, object: nil)
         
         if User.currentUser != nil {
