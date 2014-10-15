@@ -10,6 +10,11 @@ import UIKit
 
 let kNewTweetSegue = "newTweetSegue"
 
+@objc
+protocol TweetsViewControllerDelegate {
+    optional func toggleLeftPanel()
+}
+
 class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate {
 
     var tweets: [Tweet]?
@@ -18,34 +23,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var tableView: UITableView!
     
-    @IBOutlet weak var navBar: UINavigationBar!
-    
     var refreshControl = UIRefreshControl()
+    
+    var delegate: TweetsViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        var cancelBtn = UIButton()
-//        cancelBtn.frame = CGRectMake(0, 0, 75, 10)
-//        cancelBtn.setTitle("Sign Out", forState: UIControlState.Normal)
-//        cancelBtn.addTarget(self, action: "onLogout", forControlEvents: UIControlEvents.TouchUpInside)
-//        var leftBarItem = UIBarButtonItem(customView: cancelBtn)
-//        
-//        var sendBtn = UIButton()
-//        sendBtn.frame = CGRectMake(0, 0, 75, 10)
-//        sendBtn.setTitle("New", forState: UIControlState.Normal)
-//        sendBtn.addTarget(self, action: "newTweet", forControlEvents: UIControlEvents.TouchUpInside)
-//        var rightBarItem = UIBarButtonItem(customView: sendBtn)
-//        
-//        var navItem = UINavigationItem()
-//        navItem.leftBarButtonItem = leftBarItem
-//        navItem.rightBarButtonItem = rightBarItem
-//        navItem.title = "Home"
-//        navBar.items = [navItem]
-//        
-//        navBar.delegate = self
-        
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: UIBarButtonItemStyle.Plain, target: self, action: "onLogout")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onLogout")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "newTweet")
         
         tableView.delegate = self
@@ -75,10 +60,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-//    
-//    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-//        return UIBarPosition.TopAttached
-//    }
+
     
     func sentNewTweet(controller: NewTweetViewController) {
         refreshTweets()
@@ -89,7 +71,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func onLogout() {
-        User.currentUser?.logout()
+       // User.currentUser?.logout()
+        if let d = delegate {
+            d.toggleLeftPanel?()
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

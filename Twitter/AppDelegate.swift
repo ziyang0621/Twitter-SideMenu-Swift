@@ -35,8 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if User.currentUser != nil {
             // Go to the logged in screen
             println("Current user detected: \(User.currentUser?.name)")
-            var vc = storyboard.instantiateViewControllerWithIdentifier("homeNav") as UINavigationController
-            window?.rootViewController = vc
+            let containerViewController = ContainerViewController()
+            var homeNav = storyboard.instantiateViewControllerWithIdentifier("homeNav") as UINavigationController
+            homeNav.viewControllers[0] = containerViewController
+            homeNav.setNavigationBarHidden(true, animated: false)
+            
+            window?.rootViewController = homeNav
         }
         return true
     }
