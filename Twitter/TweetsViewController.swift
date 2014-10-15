@@ -10,7 +10,7 @@ import UIKit
 
 let kNewTweetSegue = "newTweetSegue"
 
-class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate {
 
     var tweets: [Tweet]?
     
@@ -25,25 +25,29 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var cancelBtn = UIButton()
-        cancelBtn.frame = CGRectMake(0, 0, 75, 10)
-        cancelBtn.setTitle("Sign Out", forState: UIControlState.Normal)
-        cancelBtn.addTarget(self, action: "onLogout", forControlEvents: UIControlEvents.TouchUpInside)
-        var leftBarItem = UIBarButtonItem(customView: cancelBtn)
+//        var cancelBtn = UIButton()
+//        cancelBtn.frame = CGRectMake(0, 0, 75, 10)
+//        cancelBtn.setTitle("Sign Out", forState: UIControlState.Normal)
+//        cancelBtn.addTarget(self, action: "onLogout", forControlEvents: UIControlEvents.TouchUpInside)
+//        var leftBarItem = UIBarButtonItem(customView: cancelBtn)
+//        
+//        var sendBtn = UIButton()
+//        sendBtn.frame = CGRectMake(0, 0, 75, 10)
+//        sendBtn.setTitle("New", forState: UIControlState.Normal)
+//        sendBtn.addTarget(self, action: "newTweet", forControlEvents: UIControlEvents.TouchUpInside)
+//        var rightBarItem = UIBarButtonItem(customView: sendBtn)
+//        
+//        var navItem = UINavigationItem()
+//        navItem.leftBarButtonItem = leftBarItem
+//        navItem.rightBarButtonItem = rightBarItem
+//        navItem.title = "Home"
+//        navBar.items = [navItem]
+//        
+//        navBar.delegate = self
         
-        var sendBtn = UIButton()
-        sendBtn.frame = CGRectMake(0, 0, 75, 10)
-        sendBtn.setTitle("New", forState: UIControlState.Normal)
-        sendBtn.addTarget(self, action: "newTweet", forControlEvents: UIControlEvents.TouchUpInside)
-        var rightBarItem = UIBarButtonItem(customView: sendBtn)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: UIBarButtonItemStyle.Plain, target: self, action: "onLogout")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "newTweet")
         
-        var navItem = UINavigationItem()
-        navItem.leftBarButtonItem = leftBarItem
-        navItem.rightBarButtonItem = rightBarItem
-        navItem.title = "Home"
-        navBar.items = [navItem]
-        
-        navBar.delegate = self
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -71,10 +75,10 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
-        return UIBarPosition.TopAttached
-    }
+//    
+//    func positionForBar(bar: UIBarPositioning) -> UIBarPosition {
+//        return UIBarPosition.TopAttached
+//    }
     
     func sentNewTweet(controller: NewTweetViewController) {
         refreshTweets()
@@ -90,8 +94,9 @@ class TweetsViewController: UIViewController, UINavigationBarDelegate, UITableVi
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == kNewTweetSegue) {
-            let detailVC = segue.destinationViewController as NewTweetViewController
-            detailVC.delegate = self
+            let detailVC = segue.destinationViewController as UINavigationController
+            var newTweetVC = detailVC.viewControllers[0] as NewTweetViewController
+            newTweetVC.delegate = self
         }
     }
     

@@ -13,8 +13,6 @@ protocol NewTweetViewControllerDelegate {
 }
 
 class NewTweetViewController: UIViewController,UINavigationBarDelegate {
-
-    @IBOutlet weak var navBar: UINavigationBar!
     
     @IBOutlet weak var profileImageView: UIImageView!
     
@@ -29,25 +27,8 @@ class NewTweetViewController: UIViewController,UINavigationBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var signOutBtn = UIButton()
-        signOutBtn.frame = CGRectMake(0, 0, 75, 10)
-        signOutBtn.setTitle("Cancel", forState: UIControlState.Normal)
-        signOutBtn.addTarget(self, action: "cancelTweet", forControlEvents: UIControlEvents.TouchUpInside)
-        var leftBarItem = UIBarButtonItem(customView: signOutBtn)
-        
-        var newBtn = UIButton()
-        newBtn.frame = CGRectMake(0, 0, 75, 10)
-        newBtn.setTitle("Tweet", forState: UIControlState.Normal)
-        newBtn.addTarget(self, action: "sendTweet", forControlEvents: UIControlEvents.TouchUpInside)
-        var rightBarItem = UIBarButtonItem(customView: newBtn)
-        
-        var navItem = UINavigationItem()
-        navItem.leftBarButtonItem = leftBarItem
-        navItem.rightBarButtonItem = rightBarItem
-        navItem.title = ""
-        navBar.items = [navItem]
-        
-        navBar.delegate = self
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: UIBarButtonItemStyle.Plain, target: self, action: "cancelTweet")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Tweet", style: UIBarButtonItemStyle.Plain, target: self, action: "sendTweet")
         
         nameLabel.text = User.currentUser?.name
         screennameLabel.text = User.currentUser?.screenname
@@ -72,7 +53,7 @@ class NewTweetViewController: UIViewController,UINavigationBarDelegate {
     }
     
     func sendTweet() {
-        var param = ["text" : statusTextView.text, "screen_name": "tan90test"]
+        var param = ["status" : statusTextView.text]
         TwitterClient.sharedInstance.composeCompletionWithParams(param, completion: { (tweets, error) -> () in
             if error != nil {
                 println(error)

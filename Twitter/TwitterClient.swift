@@ -41,7 +41,7 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
     }
     
     func composeCompletionWithParams(params: NSDictionary?, completion: (tweets: [Tweet]?, error: NSError?) ->()) {
-        POST("1.1/direct_messages/new.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+        POST("1.1/statuses/update.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
                 println("new tweet: \(response)")
         
                 completion(tweets: nil, error: nil)
