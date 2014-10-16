@@ -8,6 +8,8 @@
 
 import UIKit
 
+let kLoginSegue = "loginSegue"
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -27,12 +29,22 @@ class ViewController: UIViewController {
             (user: User?, error: NSError?) in
             if user != nil {
                 // perform segue
-                self.performSegueWithIdentifier("loginSegue", sender: self)
+                self.performSegueWithIdentifier(kLoginSegue, sender: self)
             } else {
                 //handle login error
             }
         }
         
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == kLoginSegue) {
+            let homeNav = segue.destinationViewController as UINavigationController
+            let containerViewController = ContainerViewController()
+            homeNav.viewControllers[0] = containerViewController
+            homeNav.setNavigationBarHidden(true, animated: false)
+        }
+    }
+
 }
 

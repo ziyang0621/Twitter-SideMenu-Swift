@@ -291,12 +291,70 @@
                     <view key="view" contentMode="scaleToFill" id="hkf-FU-c0E">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MIe-1k-Q83">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="menuCell" id="y7X-Rr-st7" customClass="MenuCell" customModule="Twitter" customModuleProvider="target">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="y7X-Rr-st7" id="qbm-gl-7Jc">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ts-bA-Wgu">
+                                                    <rect key="frame" x="40" y="12" width="160" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="1Ts-bA-Wgu" firstAttribute="leading" secondItem="qbm-gl-7Jc" secondAttribute="leading" constant="40" id="EVS-Vc-Eu5"/>
+                                                <constraint firstAttribute="bottom" secondItem="1Ts-bA-Wgu" secondAttribute="bottom" constant="10" id="X95-Bz-dlV"/>
+                                                <constraint firstItem="1Ts-bA-Wgu" firstAttribute="top" secondItem="qbm-gl-7Jc" secondAttribute="top" constant="12" id="cth-yo-wZK"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Ts-bA-Wgu" secondAttribute="trailing" constant="120" id="hlf-ci-CSP"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="sectionName" destination="1Ts-bA-Wgu" id="ExP-Te-lMR"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="MIe-1k-Q83" secondAttribute="trailing" id="Hhy-Dd-Jtb"/>
+                            <constraint firstItem="MIe-1k-Q83" firstAttribute="leading" secondItem="hkf-FU-c0E" secondAttribute="leading" id="L6g-Sn-QKE"/>
+                            <constraint firstItem="MIe-1k-Q83" firstAttribute="top" secondItem="hkf-FU-c0E" secondAttribute="topMargin" constant="20" id="bHo-Y2-dfM"/>
+                            <constraint firstItem="B8H-gW-yx6" firstAttribute="top" secondItem="MIe-1k-Q83" secondAttribute="bottom" id="g37-v2-n3A"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="MIe-1k-Q83" id="Hir-SC-OkL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jbG-As-MRE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1137" y="969"/>
+            <point key="canvasLocation" x="1137" y="968"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="jHt-Jf-6nm">
+            <objects>
+                <viewController storyboardIdentifier="ProfileViewController" id="C2l-Nq-YWU" customClass="ProfileViewController" customModule="Twitter" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PoH-Re-aLH"/>
+                        <viewControllerLayoutGuide type="bottom" id="944-0K-lax"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Hn-5H-I4L">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jK7-SE-vVl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1624" y="961"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ovZ-Xt-ekK">

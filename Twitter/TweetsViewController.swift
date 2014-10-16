@@ -30,7 +30,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onLogout")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "newTweet")
         
         tableView.delegate = self
@@ -70,8 +70,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         performSegueWithIdentifier(kNewTweetSegue, sender: self)
     }
     
-    func onLogout() {
-       // User.currentUser?.logout()
+    func onMenu() {
         if let d = delegate {
             d.toggleLeftPanel?()
         }

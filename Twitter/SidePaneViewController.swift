@@ -8,17 +8,54 @@
 
 import UIKit
 
-class SidePaneViewController: UIViewController {
+protocol SidePanelViewControllerDelegate {
+    func menuSelected(index: Int)
+}
+
+class SidePaneViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
+    var delegate: SidePanelViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        tableView.delegate = self
+        tableView.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 4
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("menuCell") as MenuCell
+        if indexPath.row == 0 {
+            cell.sectionName.text = "Home"
+        } else if indexPath.row == 1 {
+            cell.sectionName.text = "Profile"
+        } else if indexPath.row == 2 {
+            cell.sectionName.text = "Mention"
+        }
+        else {
+            cell.sectionName.text = "Sign Out"
+        }
+    
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row == 3 {
+            User.currentUser?.logout()
+        } else {
+            self.delegate?.menuSelected(indexPath.row)
+        }
     }
     
 
