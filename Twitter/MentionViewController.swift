@@ -1,55 +1,52 @@
 //
-//  TweetsViewController.swift
+//  MentionViewController.swift
 //  Twitter
 //
-//  Created by Ziyang Tan on 10/6/14.
+//  Created by Ziyang Tan on 10/16/14.
 //  Copyright (c) 2014 Ziyang Tan. All rights reserved.
 //
 
 import UIKit
 
-let kNewTweetSegue = "newTweetSegue"
-
 @objc
-protocol TweetsViewControllerDelegate {
+protocol MentionViewControllerDelegate {
     optional func toggleLeftPanel()
 }
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate {
-
+class MentionViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     var tweets: [Tweet]?
     
-    let formatter = NSDateFormatter()
-    
+    var delegate: MentionViewControllerDelegate?
+
     @IBOutlet weak var tableView: UITableView!
     
     var refreshControl = UIRefreshControl()
     
-    var delegate: TweetsViewControllerDelegate?
+    let formatter = NSDateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "New", style: UIBarButtonItemStyle.Plain, target: self, action: "newTweet")
+         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
+        self.navigationItem.title = "Mention"
         
         tableView.delegate = self
         tableView.dataSource = self
-        
         tableView.estimatedRowHeight = 125.0
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.registerNib(UINib(nibName: "TweetCell", bundle: nil), forCellReuseIdentifier: "tweetCell")
         
         formatter.dateFormat = "MM/dd/yy"
-        
-        refreshControl.addTarget(self, action: "refreshTweets", forControlEvents: UIControlEvents.ValueChanged)
+
+        refreshControl.addTarget(self, action: "refreshMentions", forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
         
-        refreshTweets()
+        refreshMentions()
     }
     
-    func refreshTweets() {
-        TwitterClient.sharedInstance.homeTimeLineWithCompletionWithParams(nil, completion: { (tweets, error) -> () in
+    func refreshMentions() {
+        TwitterClient.sharedInstance.mentionTimeLineWithCompletionWithParams(nil, completion: { (tweets, error) -> () in
             self.tweets = tweets
             println(self.tweets?.count)
             self.tableView.reloadData()
@@ -61,27 +58,10 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-    
-    func sentNewTweet(controller: NewTweetViewController) {
-        refreshTweets()
-    }
-    
-    func newTweet() {
-        performSegueWithIdentifier(kNewTweetSegue, sender: self)
-    }
     
     func onMenu() {
         if let d = delegate {
             d.toggleLeftPanel?()
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == kNewTweetSegue) {
-            let detailVC = segue.destinationViewController as UINavigationController
-            var newTweetVC = detailVC.viewControllers[0] as NewTweetViewController
-            newTweetVC.delegate = self
         }
     }
     
@@ -93,7 +73,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var cell = tableView.dequeueReusableCellWithIdentifier("tweetCell") as TweetCell
         
         var tweet = self.tweets?[indexPath.row]
-    
         var user = tweet?.user
         cell.nameLabel.text = user?.name
         if let screenName = user?.screenname {
@@ -110,6 +89,7 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         return cell
     }
+
     /*
     // MARK: - Navigation
 

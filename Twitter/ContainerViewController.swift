@@ -13,11 +13,12 @@ enum SlideOutState {
     case LeftPanelExpanded
 }
 
-class ContainerViewController: UIViewController, TweetsViewControllerDelegate, UIGestureRecognizerDelegate, SidePanelViewControllerDelegate, ProfileViewControllerDelegate{
+class ContainerViewController: UIViewController, TweetsViewControllerDelegate, UIGestureRecognizerDelegate, SidePanelViewControllerDelegate, ProfileViewControllerDelegate, MentionViewControllerDelegate{
     
     var centerNavigationController: UINavigationController!
     var tweetsViewController: TweetsViewController!
     var profileViewController: ProfileViewController!
+    var mentionViewController: MentionViewController!
     var leftViewController: SidePaneViewController?
     var currentState: SlideOutState = .collapsed {
         didSet {
@@ -114,6 +115,13 @@ class ContainerViewController: UIViewController, TweetsViewControllerDelegate, U
             }
             centerNavigationController.viewControllers[0] = profileViewController
         }
+        if index == 2 {
+            if mentionViewController == nil {
+                mentionViewController = UIStoryboard.mentionViewController()
+                mentionViewController.delegate = self
+            }
+            centerNavigationController.viewControllers[0] = mentionViewController
+        }
         view.addSubview(centerNavigationController.view)
         addChildViewController(centerNavigationController)
         centerNavigationController.didMoveToParentViewController(self)
@@ -172,5 +180,9 @@ private extension UIStoryboard {
     
     class func profileViewController() -> ProfileViewController? {
         return mainStoryboard().instantiateViewControllerWithIdentifier("ProfileViewController") as? ProfileViewController
+    }
+    
+    class func mentionViewController() -> MentionViewController? {
+        return mainStoryboard().instantiateViewControllerWithIdentifier("MentionViewController") as? MentionViewController
     }
 }
