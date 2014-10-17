@@ -63,6 +63,21 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
                 completion(tweets: nil, error: error)
         })
     }
+    
+    func headerCompletionWithParams(params: NSDictionary?, completion: (headerURL: String?, error: NSError?) ->()) {
+        GET("1.1/users/profile_banner.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("header tweet: \(response)")
+            
+            var sizes = response["sizes"] as NSDictionary
+            var mobile = sizes["mobile_retina"] as NSDictionary
+            var hURL = mobile["url"] as String
+            
+            completion(headerURL: hURL, error: nil)
+            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("error header tweet")
+                completion(headerURL: nil, error: error)
+        })
+    }
 
     
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {

@@ -22,6 +22,13 @@ class ProfileViewController: UIViewController {
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
         self.navigationItem.title = "Profile"
+        
+        if let screenName = User.currentUser?.screenname {
+            var params = ["screen_name" : screenName]
+            TwitterClient.sharedInstance.headerCompletionWithParams(params, completion: { (headerURL, error) -> () in
+                println(headerURL)
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {
