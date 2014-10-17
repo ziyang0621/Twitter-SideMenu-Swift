@@ -15,7 +15,13 @@ protocol ProfileViewControllerDelegate {
 
 class ProfileViewController: UIViewController {
     
+    var userName: String = ""
+    
+    var userInfo: User?
+    
     var delegate: ProfileViewControllerDelegate?
+    
+    var refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,12 +29,18 @@ class ProfileViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
         self.navigationItem.title = "Profile"
         
-        if let screenName = User.currentUser?.screenname {
-            var params = ["screen_name" : screenName]
-            TwitterClient.sharedInstance.headerCompletionWithParams(params, completion: { (headerURL, error) -> () in
-                println(headerURL)
-            })
-        }
+        refreshControl.addTarget(self, action: "refreshProfile", forControlEvents: UIControlEvents.ValueChanged)
+      //  view.addSubview(refreshControl)
+        
+        refreshProfile()
+    }
+
+    func refreshProfile() {
+        var param = ["screen_name" : userName]
+        TwitterClient.sharedInstance.showUserCompletionWithParams(param, completion: { (user, error) -> () in
+            self.userInfo = user
+        })
+
     }
 
     override func didReceiveMemoryWarning() {

@@ -112,6 +112,9 @@ class ContainerViewController: UIViewController, TweetsViewControllerDelegate, U
             if profileViewController == nil {
                 profileViewController = UIStoryboard.profileViewController()
                 profileViewController.delegate = self
+                if let userName = User.currentUser?.screenname {
+                    profileViewController.userName = userName
+                }
             }
             centerNavigationController.viewControllers[0] = profileViewController
         }

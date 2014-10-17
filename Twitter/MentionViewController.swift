@@ -40,7 +40,7 @@ class MentionViewController: UIViewController, UITableViewDataSource, UITableVie
         formatter.dateFormat = "MM/dd/yy"
 
         refreshControl.addTarget(self, action: "refreshMentions", forControlEvents: UIControlEvents.ValueChanged)
-        tableView.addSubview(refreshControl)
+    tableView.addSubview(refreshControl)
         
         refreshMentions()
     }

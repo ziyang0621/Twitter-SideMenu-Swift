@@ -78,6 +78,19 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
                 completion(headerURL: nil, error: error)
         })
     }
+    
+    func showUserCompletionWithParams(params: NSDictionary?, completion: (user: User?, error: NSError?) ->()) {
+        GET("1.1/users/show.json", parameters: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            println("show user tweet: \(response)")
+            
+            var returnUser = User(dictionary: response as NSDictionary)
+            
+            completion(user: returnUser, error: nil)
+            }, failure: { (operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
+                println("error show user tweet")
+                completion(user: nil, error: error)
+        })
+    }
 
     
     func loginWithCompletion(completion: (user: User?, error: NSError?) -> ()) {
@@ -103,12 +116,12 @@ class TwitterClient: BDBOAuth1RequestOperationManager {
             TwitterClient.sharedInstance.requestSerializer.saveAccessToken(accessToken)
             
             TwitterClient.sharedInstance.GET("1.1/account/verify_credentials.json", parameters: nil, success: {(operation:AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-                //                    println("user: \(response)")
+//                println("user: \(response)")
                 
                 var user = User(dictionary: response as NSDictionary)
                 User.currentUser = user
                 
-                println("user: \(user.name)")
+//                println("follower count: \(user.followingCount)")
                 self.loginCompletion?(user: user, error: nil)
                 }, failure: {(operation: AFHTTPRequestOperation!, error: NSError!) -> Void in
                     println("error getting current user")
