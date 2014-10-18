@@ -116,6 +116,7 @@ class ContainerViewController: UIViewController, TweetsViewControllerDelegate, U
                     profileViewController.userName = userName
                 }
             }
+            profileViewController.fromMenu = true
             centerNavigationController.viewControllers[0] = profileViewController
         }
         if index == 2 {

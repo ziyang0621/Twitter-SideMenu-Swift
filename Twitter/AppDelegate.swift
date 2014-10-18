@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             homeNav.viewControllers[0] = containerViewController
             homeNav.setNavigationBarHidden(true, animated: false)
             
-            
             window?.rootViewController = homeNav
         }
         return true

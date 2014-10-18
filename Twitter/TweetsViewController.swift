@@ -15,7 +15,7 @@ protocol TweetsViewControllerDelegate {
     optional func toggleLeftPanel()
 }
 
-class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate {
+class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewTweetViewControllerDelegate, TweetCellDelegate {
 
     var tweets: [Tweet]?
     
@@ -108,8 +108,20 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cell.profileImageView.setImageWithURL(NSURL(string: profileImageUrl))
         }
         
+        cell.delegate = self
+        
         return cell
     }
+    
+    func cellSelected(screenName: String) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let profileVC = storyBoard.instantiateViewControllerWithIdentifier("ProfileViewController") as ProfileViewController
+        profileVC.userName = screenName
+        profileVC.fromMenu = false
+        let homeNav = UINavigationController(rootViewController: profileVC)
+        presentViewController(homeNav, animated: false, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

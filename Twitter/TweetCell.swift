@@ -8,7 +8,11 @@
 
 import UIKit
 
-class TweetCell: UITableViewCell {
+protocol TweetCellDelegate {
+    func cellSelected(screenName: String)
+}
+
+class TweetCell: UITableViewCell, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -20,11 +24,22 @@ class TweetCell: UITableViewCell {
     
     @IBOutlet weak var profileImageView: UIImageView!
     
+    var delegate: TweetCellDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         profileImageView.layer.cornerRadius = 4
         profileImageView.clipsToBounds = true
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPressGesture:")
+        profileImageView.addGestureRecognizer(longPressGestureRecognizer)
+    }
+    
+    func handleLongPressGesture(recognizer: UIPanGestureRecognizer) {
+        if recognizer.state == .Ended {
+            println("long press")
+            delegate?.cellSelected(self.screenLabel.text!)
+        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

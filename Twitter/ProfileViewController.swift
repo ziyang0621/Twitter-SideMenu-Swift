@@ -22,6 +22,8 @@ class ProfileViewController: UIViewController {
     var delegate: ProfileViewControllerDelegate?
     
     var refreshControl = UIRefreshControl()
+    
+    var fromMenu = true
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -42,15 +44,20 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
-        self.navigationItem.title = "Profile"
+        if fromMenu {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Menu", style: UIBarButtonItemStyle.Plain, target: self, action: "onMenu")
+        } else {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Close", style: UIBarButtonItemStyle.Plain, target: self, action: "onClose")
+        }
         
+        self.navigationItem.title = "Profile"
+                
         refreshControl.addTarget(self, action: "refreshProfile", forControlEvents: UIControlEvents.ValueChanged)
         tableView.addSubview(refreshControl)
         
         refreshProfile()
     }
-
+ 
     func refreshProfile() {
         var param = ["screen_name" : userName]
         TwitterClient.sharedInstance.showUserCompletionWithParams(param, completion: { (user, error) -> () in
@@ -75,7 +82,6 @@ class ProfileViewController: UIViewController {
                 self.followerCountLabel.text = "\(followerCount)"
             }
             
-            
             self.refreshControl.endRefreshing()
         })
 
@@ -90,6 +96,10 @@ class ProfileViewController: UIViewController {
         if let d = delegate {
             d.toggleLeftPanel?()
         }
+    }
+    
+    func onClose() {
+       dismissViewControllerAnimated(true, completion: nil)
     }
     
 
