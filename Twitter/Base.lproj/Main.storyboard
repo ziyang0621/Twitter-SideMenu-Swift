@@ -352,6 +352,14 @@
                                         <constraint firstItem="Rx1-jG-P6W" firstAttribute="top" secondItem="S9g-e6-fwY" secondAttribute="top" id="y4n-KL-vqn"/>
                                     </constraints>
                                 </view>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profileCell" id="G7N-me-4qC">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G7N-me-4qC" id="c5i-ee-aaQ">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -366,6 +374,7 @@
                         <outlet property="bannerImageView" destination="lEq-em-Q8q" id="Q1k-7Q-jUD"/>
                         <outlet property="followerCountLabel" destination="17d-Bz-TE8" id="xnd-dn-JZI"/>
                         <outlet property="followingCountLabel" destination="AsY-6i-Bs9" id="UEA-Cd-XYR"/>
+                        <outlet property="headerView" destination="wgq-IS-qvs" id="mGr-uv-89d"/>
                         <outlet property="nameLabel" destination="zQI-B8-vu5" id="Bt5-tQ-q4m"/>
                         <outlet property="profileImageView" destination="zcs-cE-fUM" id="3og-7r-rVQ"/>
                         <outlet property="screenNameLabel" destination="DXv-Ps-j7M" id="nFa-dE-azL"/>
