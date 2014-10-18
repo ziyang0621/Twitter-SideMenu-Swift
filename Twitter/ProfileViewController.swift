@@ -23,6 +23,22 @@ class ProfileViewController: UIViewController {
     
     var refreshControl = UIRefreshControl()
 
+    @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var bannerImageView: UIImageView!
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var screenNameLabel: UILabel!
+    
+    @IBOutlet weak var tweetCountLabel: UILabel!
+    
+    @IBOutlet weak var followingCountLabel: UILabel!
+    
+    @IBOutlet weak var followerCountLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,7 +46,7 @@ class ProfileViewController: UIViewController {
         self.navigationItem.title = "Profile"
         
         refreshControl.addTarget(self, action: "refreshProfile", forControlEvents: UIControlEvents.ValueChanged)
-      //  view.addSubview(refreshControl)
+        tableView.addSubview(refreshControl)
         
         refreshProfile()
     }
@@ -38,7 +54,29 @@ class ProfileViewController: UIViewController {
     func refreshProfile() {
         var param = ["screen_name" : userName]
         TwitterClient.sharedInstance.showUserCompletionWithParams(param, completion: { (user, error) -> () in
-            self.userInfo = user
+            
+            self.nameLabel.text = user?.name
+            if let screenName = user?.screenname {
+                self.screenNameLabel.text = "@\(screenName)"
+            }
+            if let profileImageUrl = user?.profileImageUrl {
+                self.profileImageView.setImageWithURL(NSURL(string: profileImageUrl))
+            }
+            if let bannerImageUrl = user?.profileBannerUrl {
+                self.bannerImageView.setImageWithURL(NSURL(string: bannerImageUrl))
+            }
+            if let tweetCount = user?.statusesCount {
+                self.tweetCountLabel.text = "\(tweetCount)"
+            }
+            if let followingCount = user?.followingCount {
+                self.followingCountLabel.text = "\(followingCount)"
+            }
+            if let followerCount = user?.followerCount {
+                self.followerCountLabel.text = "\(followerCount)"
+            }
+            
+            
+            self.refreshControl.endRefreshing()
         })
 
     }

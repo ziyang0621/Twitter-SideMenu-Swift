@@ -23,7 +23,7 @@ class User: NSObject {
     var followerCount: Int?
     var followingCount: Int?
     var statusesCount: Int?
-    var profileBannerURL: String?
+    var profileBannerUrl: String?
     
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
@@ -34,7 +34,7 @@ class User: NSObject {
         followerCount = dictionary["followers_count"] as? Int
         followingCount = dictionary["friends_count"] as? Int
         statusesCount = dictionary["statuses_count"] as? Int
-        profileBannerURL = dictionary["profile_banner_url"] as? String
+        profileBannerUrl = dictionary["profile_banner_url"] as? String
     }
     
     func logout() {
