@@ -24,7 +24,11 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate, UITa
     
     var delegate: ProfileViewControllerDelegate?
     
+    var tweets: [Tweet]?
+    
     var fromMenu = true
+    
+    let formatter = NSDateFormatter()
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -59,20 +63,28 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate, UITa
         
         self.navigationItem.title = "Profile"
         
+        formatter.dateFormat = "MM/dd/yy"
+        
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.registerNib(UINib(nibName: "TweetCell", bundle: nil), forCellReuseIdentifier: "tweetCell")
         
         var effect = UIBlurEffect(style: .Light)
         effectView = UIVisualEffectView(effect: effect)
         effectView.alpha = 0
         
         refreshProfile()
+        refreshUserInfo()
     }
     
     override func viewDidAppear(animated: Bool) {
         effectView.frame = bannerImageView.frame
         bannerImageView.addSubview(effectView)
         viewDidAppear = true
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        viewDidAppear = false
     }
     
  
@@ -100,7 +112,14 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate, UITa
                 self.followerCountLabel.text = "\(followerCount)"
             }
         })
-
+    }
+    
+    func refreshUserInfo() {
+        var param = ["screen_name" : userName]
+        TwitterClient.sharedInstance.userTimeLineWithCompletionWithParams(param, completion: { (tweets, error) -> () in
+            self.tweets = tweets
+            self.tableView.reloadData()
+        })
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -127,11 +146,28 @@ class ProfileViewController: UIViewController, UIGestureRecognizerDelegate, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return tweets?.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return tableView.dequeueReusableCellWithIdentifier("profileCell") as UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("tweetCell") as TweetCell
+        
+        var tweet = self.tweets?[indexPath.row]
+        var user = tweet?.user
+        cell.nameLabel.text = user?.name
+        if let screenName = user?.screenname {
+            cell.screenLabel.text = "@\(screenName)"
+        } else {
+            cell.screenLabel.text = ""
+        }
+        var date = tweet?.createdAt
+        cell.timeLabel.text = formatter.stringFromDate(date!)
+        cell.tweetTextLabel.text = tweet?.text
+        if let profileImageUrl = tweet?.user?.profileImageUrl {
+            cell.profileImageView.setImageWithURL(NSURL(string: profileImageUrl))
+        }
+        
+        return cell
     }
 
     override func didReceiveMemoryWarning() {

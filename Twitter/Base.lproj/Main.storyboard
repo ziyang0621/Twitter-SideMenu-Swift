@@ -195,6 +195,24 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="MIe-1k-Q83">
                                 <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="mJE-Yx-DS5">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="150"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5zH-5r-idf">
+                                            <rect key="frame" x="70" y="25" width="100" height="100"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="Jkd-3Z-geM"/>
+                                                <constraint firstAttribute="height" constant="100" id="ejE-u9-qTv"/>
+                                            </constraints>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="centerX" secondItem="5zH-5r-idf" secondAttribute="centerX" constant="40" id="Id6-Dy-4k0"/>
+                                        <constraint firstAttribute="centerY" secondItem="5zH-5r-idf" secondAttribute="centerY" id="okq-Ib-tdB"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="menuCell" id="y7X-Rr-st7" customClass="MenuCell" customModule="Twitter" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
@@ -231,6 +249,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="profileImageView" destination="5zH-5r-idf" id="k68-UY-rse"/>
                         <outlet property="tableView" destination="MIe-1k-Q83" id="Hir-SC-OkL"/>
                     </connections>
                 </viewController>
@@ -352,14 +371,6 @@
                                         <constraint firstItem="Rx1-jG-P6W" firstAttribute="top" secondItem="S9g-e6-fwY" secondAttribute="top" id="y4n-KL-vqn"/>
                                     </constraints>
                                 </view>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="profileCell" id="G7N-me-4qC">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G7N-me-4qC" id="c5i-ee-aaQ">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

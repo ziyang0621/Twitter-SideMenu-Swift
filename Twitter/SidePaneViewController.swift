@@ -14,6 +14,8 @@ protocol SidePanelViewControllerDelegate {
 
 class SidePaneViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var profileImageView: UIImageView!
+    
     @IBOutlet weak var tableView: UITableView!
     var delegate: SidePanelViewControllerDelegate?
 
@@ -22,6 +24,15 @@ class SidePaneViewController: UIViewController, UITableViewDelegate, UITableView
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .None
+        
+        if let profileImageUrl = User.currentUser?.profileImageUrl {
+            profileImageView.setImageWithURL(NSURL(string: profileImageUrl))
+        }
+        profileImageView.layer.cornerRadius = CGRectGetWidth(profileImageView.frame) / 2;
+        profileImageView.clipsToBounds = true;
+        profileImageView.layer.borderWidth = 1.0
+        profileImageView.layer.borderColor = kThemeColor.CGColor
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,7 +57,6 @@ class SidePaneViewController: UIViewController, UITableViewDelegate, UITableView
         else {
             cell.sectionName.text = "Sign Out"
         }
-    
         return cell
     }
     
